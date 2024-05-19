@@ -22,11 +22,21 @@ async function main() {
   try {
     let pages = {};
     const currentUrl = baseurl;
-    pages = crawlPages(baseurl, currentUrl, pages);
-    console.log(pages);
+    pages = await crawlPages(baseurl, currentUrl, pages);
+    printReport(pages);
   } catch (error) {
     console.log(`Error retreving from given paramter : ${error}`);
   }
 }
 
+const printReport = function (pages) {
+  if (null === pages) {
+    console.error("Error: there are no ruls to print");
+    return;
+  }
+
+  for (const key in pages) {
+    console.log(`Found ${pages[key]} internal links to ${key}`);
+  }
+};
 main();
